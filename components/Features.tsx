@@ -3,187 +3,155 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-const features = [
+const FEATURES = [
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <path
-          d="M16 4L20 13H28L22 19L24 28L16 23L8 28L10 19L4 13H12L16 4Z"
-          stroke="#00BFFF"
-          strokeWidth="1.5"
-          strokeLinejoin="round"
-        />
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M13 2L4.5 13.5H12L11 22L19.5 10.5H12L13 2Z" stroke="#00BFFF" strokeWidth="1.4" strokeLinejoin="round" />
       </svg>
     ),
     title: "Clean Energy",
-    description:
-      "No artificial junk. No synthetic fillers. Just the precise blend of caffeine, B vitamins, and adaptogens your body actually uses.",
     stat: "200mg",
-    statLabel: "Natural Caffeine",
+    unit: "Natural Caffeine",
+    body: "No synthetic fillers. No artificial colors. Just the precise blend your body actually uses.",
   },
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <circle cx="16" cy="16" r="10" stroke="#00BFFF" strokeWidth="1.5" />
-        <circle cx="16" cy="16" r="4" fill="#00BFFF" opacity="0.4" />
-        <line x1="16" y1="6" x2="16" y2="10" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="16" y1="22" x2="16" y2="26" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="6" y1="16" x2="10" y2="16" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="22" y1="16" x2="26" y2="16" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" />
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="8" stroke="#00BFFF" strokeWidth="1.4" />
+        <circle cx="12" cy="12" r="3" fill="rgba(0,191,255,0.2)" />
+        <line x1="12" y1="4"  x2="12" y2="8"  stroke="#00BFFF" strokeWidth="1.4" strokeLinecap="round" />
+        <line x1="12" y1="16" x2="12" y2="20" stroke="#00BFFF" strokeWidth="1.4" strokeLinecap="round" />
+        <line x1="4"  y1="12" x2="8"  y2="12" stroke="#00BFFF" strokeWidth="1.4" strokeLinecap="round" />
+        <line x1="16" y1="12" x2="20" y2="12" stroke="#00BFFF" strokeWidth="1.4" strokeLinecap="round" />
       </svg>
     ),
     title: "Enhanced Focus",
-    description:
-      "Precision-dosed nootropic stack for deep work, flow states, and peak mental clarity — engineered like the machines you build.",
-    stat: "4–6hrs",
-    statLabel: "Sustained Focus",
+    stat: "4–6h",
+    unit: "Sustained Clarity",
+    body: "Precision-dosed nootropic stack for deep work, flow states, and peak mental output.",
   },
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <rect x="6" y="10" width="20" height="14" rx="2" stroke="#00BFFF" strokeWidth="1.5" />
-        <path d="M12 10V8a4 4 0 018 0v2" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M14 17l2 2 4-4" stroke="#00BFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="4" y="8" width="16" height="11" rx="2" stroke="#00BFFF" strokeWidth="1.4" />
+        <path d="M9 8V6a3 3 0 016 0v2" stroke="#00BFFF" strokeWidth="1.4" strokeLinecap="round" />
+        <path d="M10 13l2 2 3-3" stroke="#00BFFF" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
     title: "Built Different",
-    description:
-      "Where other drinks give you a spike and a crash, THE CAPACITOR is engineered for sustained output — like the hardware you admire.",
     stat: "Zero",
-    statLabel: "Sugar Added",
+    unit: "Sugar Added",
+    body: "Where others give you a spike and a crash, The Capacitor is engineered for steady output.",
   },
   {
     icon: (
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-        <path
-          d="M6 24L10 14L16 20L20 10L26 24"
-          stroke="#00BFFF"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <line x1="6" y1="24" x2="26" y2="24" stroke="#00BFFF" strokeWidth="1" opacity="0.3" />
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 18L8 10l5 6 4-9 4 11" stroke="#00BFFF" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        <line x1="4" y1="18" x2="20" y2="18" stroke="#00BFFF" strokeWidth="0.8" opacity="0.3" />
       </svg>
     ),
     title: "Sustained Performance",
-    description:
-      "Electrolytes and B-vitamin matrix keep you operating at full capacity through long sessions, deadlines, and late-night builds.",
-    stat: "No Crash",
-    statLabel: "Guaranteed",
+    stat: "No",
+    unit: "Crash",
+    body: "Electrolytes and B-vitamins keep you operating at full capacity through long builds.",
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
-
 export default function Features() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section
-      id="features"
-      ref={ref}
-      className="relative py-28 lg:py-40 bg-dark-surface overflow-hidden"
-    >
-      {/* Top divider */}
-      <div className="section-divider absolute top-0 left-0 right-0" />
-
-      {/* Background glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,191,255,0.04) 0%, transparent 70%)",
-        }}
-      />
+    <section id="features" ref={ref} className="relative py-32 lg:py-44 bg-matte-black overflow-hidden">
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
+
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-20"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-20 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8"
         >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-12 h-px bg-electric-blue/50" />
-            <span className="font-mono text-xs tracking-[0.4em] text-electric-blue uppercase">
-              Performance Specs
-            </span>
-            <div className="w-12 h-px bg-electric-blue/50" />
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-8 h-px bg-electric-blue" />
+              <span className="font-mono text-[10px] tracking-[0.5em] text-electric-blue uppercase">Performance Specs</span>
+            </div>
+            <h2
+              className="font-black tracking-tight leading-[0.9]"
+              style={{ fontSize: "clamp(2.4rem, 6vw, 5rem)" }}
+            >
+              ENGINEERED TO
+              <br />
+              <span style={{ color: "#00BFFF" }}>PERFORM.</span>
+            </h2>
           </div>
-          <h2 className="font-black text-4xl lg:text-6xl tracking-tight text-white mb-4">
-            ENGINEERED TO
-            <br />
-            <span style={{ color: "#00BFFF" }}>PERFORM.</span>
-          </h2>
-          <p className="text-silver-dim text-lg max-w-xl mx-auto leading-relaxed">
-            Every ingredient chosen with purpose. No compromise. No filler.
-            Just clean, sustained energy for people who build things.
+          <p className="text-[#555] text-base max-w-sm leading-relaxed lg:text-right">
+            Every ingredient chosen with intent.
+            No compromise. No filler.
           </p>
         </motion.div>
 
-        {/* Feature grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, i) => (
+        {/* Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {FEATURES.map((f, i) => (
             <motion.div
-              key={feature.title}
-              variants={cardVariants}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              custom={i}
-              className="group relative p-7 bg-dark-card border border-white/5 rounded-xl overflow-hidden hover:border-electric-blue/30 transition-all duration-500 cursor-default"
+              key={f.title}
+              initial={{ opacity: 0, y: 40 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative p-7 rounded-2xl overflow-hidden cursor-default transition-all duration-500 hover:-translate-y-1"
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.06)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLDivElement).style.border = "1px solid rgba(0,191,255,0.25)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 0 40px rgba(0,191,255,0.06), 0 20px 40px rgba(0,0,0,0.3)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLDivElement).style.border = "1px solid rgba(255,255,255,0.06)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+              }}
             >
-              {/* Corner accent */}
+              {/* Hover glow in corner */}
               <div
-                className="absolute top-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background:
-                    "radial-gradient(circle at top right, rgba(0,191,255,0.12), transparent 70%)",
-                }}
+                className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: "radial-gradient(circle at top right, rgba(0,191,255,0.08), transparent 70%)" }}
                 aria-hidden="true"
               />
 
               {/* Icon */}
-              <div className="mb-5 w-12 h-12 flex items-center justify-center rounded-lg bg-electric-blue/5 border border-electric-blue/10 group-hover:border-electric-blue/30 transition-colors duration-300">
-                {feature.icon}
+              <div
+                className="mb-6 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+                style={{
+                  background: "rgba(0,191,255,0.06)",
+                  border: "1px solid rgba(0,191,255,0.12)",
+                }}
+              >
+                {f.icon}
               </div>
 
               {/* Stat */}
-              <div className="mb-1 font-mono font-black text-2xl text-electric-blue">
-                {feature.stat}
-              </div>
-              <div className="mb-4 font-mono text-xs tracking-widest text-silver-dim uppercase">
-                {feature.statLabel}
-              </div>
+              <div className="font-mono font-black text-3xl text-electric-blue mb-0.5">{f.stat}</div>
+              <div className="font-mono text-[10px] tracking-[0.2em] text-[#444] uppercase mb-5">{f.unit}</div>
 
-              {/* Title */}
-              <h3 className="font-bold text-lg text-white mb-3 tracking-tight">
-                {feature.title}
-              </h3>
+              {/* Text */}
+              <h3 className="font-bold text-base text-white mb-2 tracking-tight">{f.title}</h3>
+              <p className="text-[#555] text-sm leading-relaxed">{f.body}</p>
 
-              {/* Description */}
-              <p className="text-sm text-silver-dim leading-relaxed">
-                {feature.description}
-              </p>
-
-              {/* Bottom accent line */}
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-electric-blue/0 to-transparent group-hover:via-electric-blue/40 transition-all duration-500" />
+              {/* Bottom shimmer line */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: "linear-gradient(90deg, transparent, rgba(0,191,255,0.4), transparent)" }}
+                aria-hidden="true"
+              />
             </motion.div>
           ))}
         </div>
       </div>
-
-      {/* Bottom divider */}
-      <div className="section-divider absolute bottom-0 left-0 right-0" />
     </section>
   );
 }

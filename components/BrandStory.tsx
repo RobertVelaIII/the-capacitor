@@ -2,70 +2,48 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-
-const pillars = [
-  { emoji: "⚡", label: "Engineers" },
-  { emoji: "🤖", label: "Robotics" },
-  { emoji: "💻", label: "Coders" },
-  { emoji: "🎮", label: "Gamers" },
-  { emoji: "🧠", label: "AI Builders" },
-  { emoji: "🔧", label: "Makers" },
-  { emoji: "🎨", label: "Creators" },
-  { emoji: "📐", label: "Designers" },
-];
+import PCBBackground from "@/components/ui/PCBBackground";
 
 export default function BrandStory() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  return (
-    <section
-      id="story"
-      ref={ref}
-      className="relative py-28 lg:py-40 bg-dark-surface overflow-hidden"
-    >
-      {/* Top divider */}
-      <div className="section-divider absolute top-0 left-0 right-0" />
+  const bars = [
+    { label: "Focus",   pct: 94 },
+    { label: "Stamina", pct: 88 },
+    { label: "Clarity", pct: 97 },
+  ];
 
-      {/* Background pattern — circuit-like lines */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02]" aria-hidden="true">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="circuit" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M0 40 H30 V10 H50 V40 H80" stroke="#00BFFF" strokeWidth="1" fill="none" />
-              <path d="M40 0 V25 H70 V55 H40 V80" stroke="#00BFFF" strokeWidth="1" fill="none" />
-              <circle cx="30" cy="10" r="2" fill="#00BFFF" />
-              <circle cx="50" cy="40" r="2" fill="#00BFFF" />
-              <circle cx="40" cy="55" r="2" fill="#00BFFF" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#circuit)" />
-        </svg>
-      </div>
+  return (
+    <section id="story" ref={ref} className="relative py-32 lg:py-44 bg-matte-black overflow-hidden">
+
+      {/* PCB background at very low opacity */}
+      <PCBBackground />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
 
-          {/* Left — story copy */}
+          {/* LEFT — story */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-px bg-electric-blue" />
-              <span className="font-mono text-xs tracking-[0.4em] text-electric-blue uppercase">
-                Our Story
-              </span>
+              <span className="font-mono text-[10px] tracking-[0.5em] text-electric-blue uppercase">Our Story</span>
             </div>
 
-            <h2 className="font-black text-4xl lg:text-5xl text-white tracking-tight leading-tight mb-8">
+            <h2
+              className="font-black tracking-tight leading-[0.9] mb-10"
+              style={{ fontSize: "clamp(2.4rem, 6vw, 5rem)" }}
+            >
               BUILT FOR
               <br />
               <span style={{ color: "#00BFFF" }}>BUILDERS.</span>
             </h2>
 
-            <div className="space-y-5 text-silver-dim leading-relaxed">
+            <div className="space-y-5 text-[#666] text-base leading-relaxed">
               <p>
                 The energy drink market was designed for people who want a quick
                 rush — loud cans, neon colors, and enough sugar to crash your
@@ -73,9 +51,9 @@ export default function BrandStory() {
               </p>
               <p>
                 THE CAPACITOR was created for the late-night coders pushing past
-                midnight commits. For the engineers stress-testing hardware at
-                2am. For the AI builders training models, iterating pipelines,
-                and solving problems that have never been solved before.
+                midnight commits. For the engineers stress-testing hardware at 2am.
+                For the AI builders training models, iterating pipelines, and solving
+                problems that have never been solved before.
               </p>
               <p>
                 We took the same precision-first mindset that defines great
@@ -88,92 +66,89 @@ export default function BrandStory() {
               </p>
             </div>
 
-            {/* Quote */}
-            <div className="mt-10 pl-5 border-l-2 border-electric-blue/40">
-              <p className="text-lg text-white/80 italic leading-relaxed">
+            {/* Pull quote */}
+            <div className="mt-10 pl-5" style={{ borderLeft: "2px solid rgba(0,191,255,0.3)" }}>
+              <p className="text-base text-[#888] italic leading-relaxed">
                 &ldquo;The best energy drink isn&apos;t the loudest one.
                 It&apos;s the one that keeps you charged when it matters most.&rdquo;
               </p>
-              <span className="mt-3 block font-mono text-xs tracking-widest text-electric-blue/60 uppercase">
+              <span className="mt-3 block font-mono text-[10px] tracking-[0.35em] text-electric-blue/50 uppercase">
                 — THE CAPACITOR
               </span>
             </div>
           </motion.div>
 
-          {/* Right — audience pillars */}
+          {/* RIGHT — metrics card */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="relative p-8 lg:p-10 border border-white/8 rounded-2xl bg-dark-card">
-              {/* Header */}
-              <p className="font-mono text-xs tracking-[0.4em] text-electric-blue uppercase mb-6">
+            <div
+              className="relative p-8 lg:p-10 rounded-2xl"
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                boxShadow: "0 40px 80px rgba(0,0,0,0.4)",
+              }}
+            >
+              <p className="font-mono text-[10px] tracking-[0.45em] text-electric-blue uppercase mb-8">
                 Powered by THE CAPACITOR
               </p>
 
-              {/* Pill grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 gap-3 mb-10">
-                {pillars.map((p, i) => (
+              {/* Audience grid */}
+              <div className="grid grid-cols-4 gap-2 mb-10">
+                {[
+                  { e: "⌨", l: "Engineers" },
+                  { e: "🤖", l: "Robotics" },
+                  { e: "💻", l: "Coders" },
+                  { e: "🎮", l: "Gamers" },
+                  { e: "🧠", l: "AI Builders" },
+                  { e: "🔧", l: "Makers" },
+                  { e: "🎨", l: "Creators" },
+                  { e: "📐", l: "Designers" },
+                ].map((p) => (
                   <motion.div
-                    key={p.label}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{
-                      duration: 0.5,
-                      delay: 0.3 + i * 0.06,
-                      ease: [0.16, 1, 0.3, 1],
+                    key={p.l}
+                    whileHover={{ y: -2, scale: 1.04 }}
+                    className="flex flex-col items-center gap-1.5 p-3 rounded-xl cursor-default transition-colors duration-300"
+                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(0,191,255,0.2)";
+                      (e.currentTarget as HTMLDivElement).style.background = "rgba(0,191,255,0.04)";
                     }}
-                    className="flex flex-col items-center gap-2 p-4 bg-white/3 border border-white/5 rounded-xl hover:border-electric-blue/20 hover:bg-electric-blue/5 transition-all duration-300 cursor-default"
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.05)";
+                      (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.02)";
+                    }}
                   >
-                    <span className="text-2xl" role="img" aria-label={p.label}>
-                      {p.emoji}
-                    </span>
-                    <span className="font-mono text-xs text-silver-dim tracking-wider">
-                      {p.label}
-                    </span>
+                    <span className="text-xl">{p.e}</span>
+                    <span className="font-mono text-[9px] text-[#444] tracking-wider text-center">{p.l}</span>
                   </motion.div>
                 ))}
               </div>
 
-              {/* Voltage meter visual */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="font-mono text-xs text-silver-dim tracking-wider uppercase">
-                    Energy Output
-                  </span>
-                  <span className="font-mono text-xs text-electric-blue">
-                    FULL CHARGE
-                  </span>
+              {/* Voltage meter bars */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-mono text-[10px] text-[#444] tracking-[0.3em] uppercase">Output Level</span>
+                  <span className="font-mono text-[10px] text-electric-blue/60 uppercase">Full Charge</span>
                 </div>
-                {[
-                  { label: "Focus", pct: 94 },
-                  { label: "Stamina", pct: 88 },
-                  { label: "Clarity", pct: 96 },
-                ].map((bar, i) => (
-                  <div key={bar.label}>
-                    <div className="flex justify-between mb-1">
-                      <span className="font-mono text-xs text-silver-dim">
-                        {bar.label}
-                      </span>
-                      <span className="font-mono text-xs text-electric-blue/70">
-                        {bar.pct}%
-                      </span>
+                {bars.map((b, i) => (
+                  <div key={b.label}>
+                    <div className="flex justify-between mb-1.5">
+                      <span className="font-mono text-[11px] text-[#555]">{b.label}</span>
+                      <span className="font-mono text-[11px] text-electric-blue/60">{b.pct}%</span>
                     </div>
-                    <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                    <div className="h-px rounded-full" style={{ background: "rgba(255,255,255,0.04)" }}>
                       <motion.div
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${bar.pct}%` } : {}}
-                        transition={{
-                          duration: 1,
-                          delay: 0.5 + i * 0.15,
-                          ease: [0.16, 1, 0.3, 1],
-                        }}
                         className="h-full rounded-full"
+                        initial={{ width: 0 }}
+                        animate={inView ? { width: `${b.pct}%` } : {}}
+                        transition={{ duration: 1.2, delay: 0.6 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                         style={{
-                          background:
-                            "linear-gradient(90deg, #00BFFF, #00E5FF)",
-                          boxShadow: "0 0 8px rgba(0,191,255,0.5)",
+                          background: "linear-gradient(90deg, #0066FF, #00BFFF)",
+                          boxShadow: "0 0 6px rgba(0,191,255,0.5)",
                         }}
                       />
                     </div>
@@ -183,7 +158,7 @@ export default function BrandStory() {
 
               {/* Corner glow */}
               <div
-                className="absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-10 pointer-events-none"
+                className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-3xl opacity-10 pointer-events-none"
                 style={{ background: "#00BFFF" }}
                 aria-hidden="true"
               />
@@ -191,9 +166,6 @@ export default function BrandStory() {
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom divider */}
-      <div className="section-divider absolute bottom-0 left-0 right-0" />
     </section>
   );
 }
