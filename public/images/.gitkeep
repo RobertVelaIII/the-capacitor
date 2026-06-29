@@ -1,0 +1,11 @@
+# Place your product images here:
+#
+#   hero-capacitor.png  — Full product shot for hero section (right side)
+#   can-product.png     — Can image for Product Spotlight section
+#   logo-white.png      — White logo for dark backgrounds (Navbar, Footer)
+#   logo-black.png      — Black logo for light backgrounds (unused currently)
+#
+# Recommended sizes:
+#   hero-capacitor.png  → at least 800x1200px, PNG with transparent background
+#   can-product.png     → at least 600x900px, PNG with transparent background
+#   logo-white.png      → at least 200x200px, SVG or PNG, transparent background
