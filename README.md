@@ -1,6 +1,10 @@
 # THE CAPACITOR — Landing Page
 
-Premium energy drink landing page. Built with Next.js 15, TypeScript, Tailwind CSS, and Framer Motion.
+Premium energy drink landing page built for engineers, makers, and builders.
+Next.js 16 · TypeScript · Tailwind CSS · Framer Motion · Deployed on Vercel.
+
+**Live:** https://the-capacitor.vercel.app
+**Repo:** https://github.com/RobertVelaIII/the-capacitor
 
 ---
 
@@ -10,39 +14,45 @@ Premium energy drink landing page. Built with Next.js 15, TypeScript, Tailwind C
 cd the-capacitor
 npm install
 npm run dev
+# → http://localhost:3000
 ```
-
-Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## Add Your Images
 
-Place the following files in `/public/images/`:
+Drop files into `/public/images/` and push. No code changes needed — the site auto-detects them in priority order.
 
-| File | Used In | Recommended Size |
-|------|---------|-----------------|
-| `hero-capacitor.png` | Hero section (right side) | 800×1200px, transparent bg |
-| `can-product.png` | Product Spotlight section | 600×900px, transparent bg |
-| `logo-white.png` | Navbar + Footer | 200×200px, transparent bg |
-| `logo-black.png` | Reserved for light themes | 200×200px, transparent bg |
+| Purpose | Accepted filenames (tried in order) | Recommended size |
+|---------|--------------------------------------|-----------------|
+| Hero product render | `hero-can.png` → `can.png` → `hero-capacitor.png` | 800×1200px, transparent bg |
+| Product Spotlight can | `can-front.png` → `can-product.png` | 600×900px, transparent bg |
+| Logo (dark backgrounds) | `logo-white.png` | 200×200px, transparent bg |
+| Logo (light backgrounds) | `logo-black.png` | 200×200px, transparent bg |
 
-> All images should be PNG with transparent backgrounds for the best look on dark backgrounds.
+If an image is missing, an elegant branded placeholder is shown automatically.
 
 ---
 
-## Square Checkout Setup
+## Configuration
 
-Search for `SQUARE_CHECKOUT_URL` across the project — it appears in:
+Everything you'll need to update lives in **`lib/constants.ts`**:
 
-- `components/Navbar.tsx`
-- `components/Hero.tsx`
-- `components/ProductSpotlight.tsx`
-- `components/Footer.tsx`
+```ts
+// Square checkout link — replaces PLACEHOLDER everywhere on the site
+export const SQUARE_CHECKOUT_URL = "https://square.link/u/PLACEHOLDER";
 
-Replace `https://square.link/u/PLACEHOLDER` with your real Square checkout link in each file, or extract it to a shared `lib/constants.ts` file.
+// Launch date — drives the Countdown section
+export const LAUNCH_DATE = new Date("2026-10-15T09:00:00-06:00");
 
-**To embed a Square payment button** in the future, Square provides an embeddable Web Payments SDK. You can drop it into a new `components/SquareBuyButton.tsx` client component.
+// Social links
+export const SOCIAL = {
+  instagram: "https://instagram.com/thecapacitor",
+  tiktok:    "https://tiktok.com/@thecapacitor",
+  twitter:   "https://x.com/thecapacitor",
+  email:     "hello@thecapacitor.com",
+};
+```
 
 ---
 
@@ -51,19 +61,30 @@ Replace `https://square.link/u/PLACEHOLDER` with your real Square checkout link 
 ```
 the-capacitor/
 ├── app/
-│   ├── globals.css          # Global styles, Tailwind, custom utilities
-│   ├── layout.tsx           # Root layout + SEO metadata
-│   └── page.tsx             # Main page — composes all sections
+│   ├── globals.css              # Global styles, glass/glow utilities, animations
+│   ├── layout.tsx               # Root layout + SEO metadata
+│   └── page.tsx                 # Page — composes all sections in order
 ├── components/
-│   ├── Navbar.tsx           # Fixed nav with mobile menu
-│   ├── Hero.tsx             # Full-screen hero with animated canvas
-│   ├── Features.tsx         # 4-card performance feature grid
-│   ├── ProductSpotlight.tsx # Can image + spec table + CTA
-│   ├── BrandStory.tsx       # Brand copy + audience pillars + voltage bars
-│   ├── EmailSignup.tsx      # Email capture with fake success state
-│   └── Footer.tsx           # Links, social icons, disclaimer
+│   ├── Navbar.tsx               # Fixed nav, glass blur on scroll, mobile drawer
+│   ├── Hero.tsx                 # Full-screen: particle canvas, lightning bolt, ambient glow
+│   ├── WhyCapacitor.tsx         # Before/after contrast strips + 3 brand pillars
+│   ├── Features.tsx             # 4-card performance grid
+│   ├── DesignedForBuilders.tsx  # Animated scrolling ticker + stats bar
+│   ├── ProductSpotlight.tsx     # Can image + spec table + Square CTA
+│   ├── ProductSpecs.tsx         # Ingredient bars + competitor comparison table
+│   ├── BrandStory.tsx           # Brand copy + audience grid + voltage bars
+│   ├── FAQ.tsx                  # 8-question accordion
+│   ├── Countdown.tsx            # Live countdown timer to launch date
+│   ├── EmailSignup.tsx          # Email capture (frontend only — wire up backend)
+│   ├── Footer.tsx               # Links, social icons, Square CTA, disclaimer
+│   └── ui/
+│       ├── GlowButton.tsx       # Reusable button: primary / secondary / ghost
+│       ├── PCBBackground.tsx    # Subtle SVG circuit trace background
+│       └── ProductImage.tsx     # Smart image with ordered fallback + placeholder
+├── lib/
+│   └── constants.ts             # ← Single config file: Square URL, dates, socials, image paths
 ├── public/
-│   └── images/              # ← Place your images here
+│   └── images/                  # ← Drop product images here
 ├── tailwind.config.ts
 ├── next.config.ts
 └── package.json
@@ -73,57 +94,53 @@ the-capacitor/
 
 ## Deploy to Vercel
 
-### Option A — Vercel CLI (fastest)
+Already deployed. To redeploy after changes:
 
 ```bash
-npm install -g vercel
-vercel login
+git add .
+git commit -m "your message"
+git push origin main
+# Vercel auto-deploys on push
+```
+
+To deploy manually:
+```bash
 vercel --prod
 ```
 
-Follow the prompts. Vercel auto-detects Next.js — no config needed.
-
-### Option B — GitHub + Vercel Dashboard
-
-1. Push this repo to GitHub:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial: THE CAPACITOR landing page"
-   git remote add origin https://github.com/YOUR_USERNAME/the-capacitor.git
-   git push -u origin main
-   ```
-
-2. Go to [vercel.com](https://vercel.com) → **Add New Project**
-3. Import the GitHub repo
-4. Framework: **Next.js** (auto-detected)
-5. Click **Deploy**
-
 ### Custom Domain
-
-In Vercel dashboard → **Project Settings → Domains** → add your domain (e.g., `thecapacitor.com`).
-
----
-
-## Customization Checklist
-
-- [ ] Replace all `SQUARE_CHECKOUT_URL` placeholders with real Square link
-- [ ] Add product images to `/public/images/`
-- [ ] Update social URLs in `Footer.tsx` (Instagram, TikTok)
-- [ ] Update contact email in `Footer.tsx`
-- [ ] Update SEO metadata in `app/layout.tsx` (url, og:image)
-- [ ] Wire up email signup to real backend (Mailchimp, Resend, ConvertKit)
-- [ ] Add real domain in Vercel settings
+Vercel dashboard → Project Settings → Domains → add your domain.
+Then update the `url` field in `app/layout.tsx`.
 
 ---
 
 ## Tech Stack
 
-- **Next.js 15** (App Router)
-- **TypeScript**
-- **Tailwind CSS 3**
-- **Framer Motion 11**
-- **Vercel** (hosting)
+| Tool | Version | Role |
+|------|---------|------|
+| Next.js | 16 (App Router) | Framework |
+| TypeScript | 5 | Type safety |
+| Tailwind CSS | 3 | Styling |
+| Framer Motion | 11 | Animations |
+| Vercel | — | Hosting + CI/CD |
+
+---
+
+## Animations Reference
+
+| Effect | Where | Notes |
+|--------|-------|-------|
+| Particle canvas + connection lines | Hero | 60 moving particles, `requestAnimationFrame` |
+| Lightning bolt | Hero | Fires at 2s, then every 15–20s randomly |
+| Ambient glow drift | Hero | 20s CSS keyframe loop |
+| Floating product image | Hero, Product | `float` keyframe |
+| PCB circuit traces | Hero, Brand Story | SVG pattern, 2.8% opacity |
+| Scrolling ticker rows | Designed For Builders | `framer-motion` infinite scroll |
+| Staggered scroll reveals | All sections | `whileInView` + `once: true` |
+| Live countdown digits | Countdown | Updates every second, flip animation |
+| FAQ accordion | FAQ | Smooth `height: auto` via AnimatePresence |
+| Button shimmer | All GlowButtons | CSS `::after` sweep on hover |
+| Card border glow | Features, Brand Story | `onMouseEnter` inline style swap |
 
 ---
 

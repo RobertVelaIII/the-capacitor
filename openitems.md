@@ -1,50 +1,47 @@
 # THE CAPACITOR — Open Items
 
 ## Images
-- [ ] Upload `public/images/hero-capacitor.png` — main hero product shot (right side of hero section)
-- [ ] Upload `public/images/can-product.png` — can image for Product Spotlight section
-- [ ] Upload `public/images/logo-white.png` — white logo for Navbar and Footer
-- [ ] Upload `public/images/logo-black.png` — black logo (reserved for light backgrounds)
+- [ ] Upload `public/images/hero-can.png` or `can.png` — hero product shot (right side of hero, auto-detected)
+- [ ] Upload `public/images/can-front.png` or `can-product.png` — Product Spotlight section (auto-detected)
+- [ ] Upload `public/images/logo-white.png` — Navbar + Footer (falls back to "TC" monogram)
+- [ ] Upload `public/images/logo-black.png` — reserved for light backgrounds
+
+> Drop any of the above into `/public/images/` and push to GitHub — no code changes needed.
 
 ## Square Checkout
-- [ ] Replace `SQUARE_CHECKOUT_URL = "https://square.link/u/PLACEHOLDER"` with real Square link in:
-  - `components/Navbar.tsx`
-  - `components/Hero.tsx`
-  - `components/ProductSpotlight.tsx`
-  - `components/Footer.tsx`
+- [ ] Replace `SQUARE_CHECKOUT_URL` in `lib/constants.ts` (single file — propagates everywhere automatically)
 
 ## Domain
-- [ ] Add custom domain in Vercel dashboard → Project Settings → Domains
-- [ ] Update `app/layout.tsx` metadata `url` field to match real domain (currently commented out)
-- [ ] Add `og:image` meta tag in `app/layout.tsx` once domain and hero image are live
+- [ ] Add custom domain in Vercel → Project Settings → Domains
+- [ ] Update `url` field in `app/layout.tsx` metadata once domain is live
+- [ ] Add `og:image` in `app/layout.tsx` once hero image and domain are set
 
 ## Social & Contact
-- [ ] Update Instagram URL in `components/Footer.tsx` (currently `instagram.com/thecapacitor`)
-- [ ] Update TikTok URL in `components/Footer.tsx` (currently `tiktok.com/@thecapacitor`)
-- [ ] Update contact email in `components/Footer.tsx` (currently `hello@thecapacitor.com`)
+- [ ] Update `SOCIAL.instagram`, `SOCIAL.tiktok`, `SOCIAL.twitter`, `SOCIAL.email` in `lib/constants.ts`
+
+## Launch Date
+- [ ] Update `LAUNCH_DATE` in `lib/constants.ts` (currently set to Oct 15 2026) — Countdown section reads from this automatically
 
 ## Email Signup
-- [ ] Wire up the email form in `components/EmailSignup.tsx` to a real backend
-  - Options: Mailchimp, ConvertKit, Resend, Square Marketing, or a simple API route
-  - Currently shows a fake success state after 1.2s delay
+- [ ] Wire up `components/EmailSignup.tsx` to a real backend (currently fake success state)
+  - Options: Mailchimp, ConvertKit, Resend, Loops, or a Next.js `/api/subscribe` route
 
-## Product / Brand Copy
-- [ ] Finalize formula — update spec table in `components/ProductSpotlight.tsx` (Calories row is TBD)
-- [ ] Update disclaimer once final ingredients and nutrition facts are confirmed
-- [ ] Confirm product name / flavor lineup (currently only "Original Charge")
+## Product / Formula
+- [ ] Finalize formula — update Calories row (currently "TBD") in `components/ProductSpotlight.tsx` and `components/ProductSpecs.tsx`
+- [ ] Update disclaimer once ingredients and nutrition facts are confirmed
+- [ ] Add more flavors to `components/ProductSpotlight.tsx` when additional SKUs are ready
 
-## Future Sections / Features
-- [ ] Add a real Square Web Payments embed button (Square Payments SDK) when ready to sell
-- [ ] Add a "Where to Buy" section if stocking retail locations
-- [ ] Add a press/media kit section for manufacturers and investors
-- [ ] Add a nutrition facts panel image or component
-- [ ] Consider adding a flavor lineup section when additional SKUs are ready
+## Future Sections
+- [ ] Add Square Web Payments embed button (Square Payments SDK) when ready to transact
+- [ ] Add "Where to Buy" section if stocking retail / distributor locations
+- [ ] Add press / media kit section for manufacturers and investors
+- [ ] Add nutrition facts panel image or component
+- [ ] Add flavor lineup / comparison section for future SKUs
 
 ## SEO / Analytics
-- [ ] Add Vercel Analytics (`@vercel/analytics`) for traffic tracking
+- [ ] Add Vercel Analytics — `npm i @vercel/analytics`, import in `app/layout.tsx`
 - [ ] Add favicon — place `favicon.ico` or `icon.png` in `/app/` folder
-- [ ] Add `apple-touch-icon` and `manifest.json` for PWA/mobile home screen
+- [ ] Add `apple-touch-icon` and `manifest.json` for PWA / mobile home screen
 
 ## Misc
-- [ ] Remove `public/images/.gitkeep` after all real images are uploaded
-- [ ] Remove `node_modules` from any accidental git tracking (already in `.gitignore`)
+- [ ] Remove `public/images/.gitkeep` once real images are uploaded
